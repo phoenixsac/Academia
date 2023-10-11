@@ -10,6 +10,8 @@
 int main() {
     int client_soc;
     struct sockaddr_in server_addr;
+
+    char send_buff[256],recv_buff[256];
     // char buffer[MAX_BUFFER_SIZE];
     // const char* message = "Hello from client";
 
@@ -25,19 +27,28 @@ int main() {
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
     // Connect to the server
-    if (connect(client_soc, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+    int connect_status=connect(client_soc, (struct sockaddr *)&server_addr, sizeof(server_addr));
+    if (connect_status < 0) {
         perror("Connection failed");
         exit(EXIT_FAILURE);
     }
-   // printf("Client to server connection successfully established\n");
+    else if(connect_status==0)
+        printf("Connection was successful.");
+    //printf("Client to server connection successfully established\n");
 
-    char server_response_buff[256];
-    memset(server_response_buff, 0, sizeof(server_response_buff));
-    int valread=read(client_soc,server_response_buff,sizeof(server_response_buff));
-    printf("Server response : ",server_response_buff);
+    //char server_response_buff[256];
 
-    send(client_soc,HELLO_MSG_FROM_CLIENT ,strlen(HELLO_MSG_FROM_CLIENT), 0);
-    printf("\nMessage sent to the server\n");
+    memset(send_buff, 0, sizeof(send_buff));
+   // send_buff=HELLO_MSG_FROM_CLIENT;
+    //send_buff = HELLO_MSG_FROM_CLIENT;
+    strcpy(send_buff,"Hi from client side.");
+    if(send(client_soc,&send_buff,strlen(send_buff), 0)!=-1)
+        printf("\nMessage sent to the server\n");
+
+    memset(recv_buff, 0, sizeof(recv_buff));
+    int valread=read(client_soc,recv_buff,sizeof(recv_buff));
+    if(valread!=-1)
+        printf("Server response : ",recv_buff);
 
     return 0;
 }
