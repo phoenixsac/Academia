@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "msg_strings.h": "c",
+        "constants.h": "c"
+    }
+}
