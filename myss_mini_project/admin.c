@@ -2,7 +2,9 @@
 #include<stdio.h>
 #include "constants.h"
 #include "utilities.h"
-#include "read_line.c"
+// #include "read_line.c"
+#include "student.c"
+
 
 char send_buff[1024],recv_buff[1024];
 
@@ -11,6 +13,7 @@ struct Admin{
 	char emailId[100];
 	char password[100];
 }a;
+
 
 void fill_admin(){
 	strcpy(a.name, "admin");
@@ -50,20 +53,20 @@ int handleAdmin(int client_soc){
 			switch(atoi(recv_buff)){
 				case 1 :add_stud(client_soc); 
 						break;
-				case 2: view_stud_details(client_soc);
-						break;
-				case 3 :add_fac(client_soc);
-						break;
-				case 4 :view_fac_details(client_soc); 
-						break;
-				case 5 :activate_stud(client_soc);
-						break;
-				case 6 :block_stud(client_soc);
-						break;
-				case 7 :mod_stud_details(client_soc);
-						break;
-				case 8 :mod_fac_details(client_soc);
-						break;
+				// case 2: view_stud_details(client_soc);
+				// 		break;
+				// case 3 :add_fac(client_soc);
+				// 		break;
+				// case 4 :view_fac_details(client_soc); 
+				// 		break;
+				// case 5 :activate_stud(client_soc);
+				// 		break;
+				// case 6 :block_stud(client_soc);
+				// 		break;
+				// case 7 :mod_stud_details(client_soc);
+				// 		break;
+				// case 8 :mod_fac_details(client_soc);
+				// 		break;
 				case 9 :write(client_soc, CONN_CLOSE_MSG, strlen(CONN_CLOSE_MSG));
                 		status = 1;
                 		break;
