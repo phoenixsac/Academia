@@ -6,7 +6,9 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include "constants.h"
-#include "menu.h"
+#include "menu.c"
+#include "admin.c"
+#include "utilities.c"
 
 int init_server(){
     int server_soc;
@@ -26,8 +28,64 @@ int init_server(){
     return server_soc;
 }
 
+
+
+void process_command(const char *command) 
+{
+    printf("\nReceived command: %s\n", command);
+}
+
+
+
+
+
+char get_role(int client_soc) 
+{   
+    char buffer[1024];
+    char command_buffer[1024];
+    int buffer_index = 0;
+    char role=' ';
+    char *prompt=MAIN_MENU_MSG_CONST;
+    for(int i=0;i<1;i++) 
+    {
+        
+            send(client_soc,prompt,strlen(prompt),0);
+            int bytes_received = recv(client_soc, buffer, sizeof(buffer), 0);
+            if (bytes_received <= 0) 
+            {
+                break;
+            }
+    
+        
+        role=buffer[0];
+    }
+    return role;
+}
+
+
+void handle_client(int client_soc){
+    int bytes_to_recv=256;
+    int n;
+    char buffer[256];
+
+    
+    char role=get_role(client_soc);
+    //printf("value of get role method : %c",role);
+        
+    switch(role){
+        case '1': clear_buff(buffer);
+                //strcpy(buffer,"in admin menu");
+                //write(client_soc,buffer,sizeof(buffer));
+                //printf("In admin handling choice.");
+                handleAdmin(client_soc);
+                break;
+        default:printf("\nEnter valid choice");
+    }
+}
+
+
 int main() {
-   int client_soc;
+    int client_soc;
     char send_buff[256],recv_buff[256];
 
     int server_soc=init_server();
@@ -37,30 +95,33 @@ int main() {
 
     int client_addr_len;
    // client_soc=accept(server_soc,(struct sockaddr*)&client_addr,&client_addr_len);
-while(1){
-    client_soc = accept(server_soc,(struct sockaddr*)&client_addr,&client_addr_len);
+for(;;){
+        client_soc = accept(server_soc,(struct sockaddr*)&client_addr,&client_addr_len);
         if (client_soc < 0) {
             perror("accept");
             exit(EXIT_FAILURE);
         }
+
         printf("Client connected\n");
         printf("Recieved connection request from a client\n");
-        read(client_soc,send_buff,sizeof(send_buff));
-        printf("Client message : %s",send_buff);
+
+        pid_t pid = fork();
+        if (pid == -1) 
+        {
+            perror("Error creating child process");
+            close(client_soc);
+            continue; 
+        }
+        if (pid == 0) 
+        {
+            close(server_soc); 
+            handle_client(client_soc);
+            exit(EXIT_SUCCESS); 
+        }
+        close(client_soc);
 }
-    memset(send_buff, 0, sizeof(send_buff));
-   // send_buff="dasd";
-    strcpy(send_buff,SERVER_CONN_SUCCESS_MSG);
-    send(client_soc, &send_buff, sizeof(send_buff),0);
-
-   // char client_response_buff[256];
-   
-    //memset(recv_buff, 0, sizeof(recv_buff));
-    memset(send_buff, 0, sizeof(send_buff));
-    read(client_soc,send_buff,sizeof(send_buff));
-    printf("Client message : %s",send_buff);
-
-    close(client_soc);
-
-    return 0;
+return 0;
 }
+
+  
+

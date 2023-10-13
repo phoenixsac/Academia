@@ -2,6 +2,10 @@
     "files.associations": {
         "msg_strings.h": "c",
         "constants.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "stdio.h": "c",
+        "typeinfo": "c",
+        "types.h": "c",
+        "utilities.h": "c"
     }
 }

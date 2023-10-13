@@ -6,14 +6,15 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include "constants.h"
+#include "utilities.c"
+#include "read_line.c"
 
-int main() {
-    int client_soc;
+int client_soc;
+char send_buff[1024],recv_buff[1024];
+
+int connect_client(){
+   
     struct sockaddr_in server_addr;
-
-    char send_buff[256],recv_buff[256];
-    // char buffer[MAX_BUFFER_SIZE];
-    // const char* message = "Hello from client";
 
     // Creating socket file descriptor
     if ((client_soc = socket(AF_INET, SOCK_STREAM,0)) < 0) {
@@ -26,29 +27,68 @@ int main() {
     server_addr.sin_port = htons(PORT);
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
+    return connect(client_soc, (struct sockaddr *)&server_addr, sizeof(server_addr));
+}
+
+// void clear_buff(char* buff_to_clr){
+//     memset(buff_to_clr, 0, sizeof(buff_to_clr));
+// }
+
+// void send_to_server(){
+    
+//     clear_buff(send_buff);
+//     ssize_t usr_inp_len=read(STDIN_FILENO, send_buff, sizeof(send_buff));
+
+//     if (usr_inp_len <= 0) {
+//         perror("Input read error");
+//         break; // Exit the loop if there's an error
+//     }
+
+//     if (send_buff[usr_inp_len - 1] == '\n') {
+//         send_buff[usr_inp_len - 1] = '\0';
+//         usr_inp_len--; // Adjust the length to exclude the newline
+//     }
+
+//     write(client_soc, send_buff, usr_inp_len);
+// }
+
+
+
+
+
+int main() {
+     
     // Connect to the server
-    int connect_status=connect(client_soc, (struct sockaddr *)&server_addr, sizeof(server_addr));
+    int connect_status=connect_client();
     if (connect_status < 0) {
         perror("Connection failed");
         exit(EXIT_FAILURE);
     }
     else if(connect_status==0)
         printf("Connection was successful.");
-    //printf("Client to server connection successfully established\n");
 
-    //char server_response_buff[256];
+    while(read(client_soc, recv_buff, sizeof(recv_buff)) > 0) {   
+        
+        write(STDOUT_FILENO, recv_buff, strlen(recv_buff));
+        clear_buff(send_buff); 
 
-    memset(send_buff, 0, sizeof(send_buff));
-   // send_buff=HELLO_MSG_FROM_CLIENT;
-    //send_buff = HELLO_MSG_FROM_CLIENT;
-    strcpy(send_buff,"Hi from client side.");
-    if(send(client_soc,&send_buff,strlen(send_buff), 0)!=-1)
-        printf("\nMessage sent to the server\n");
+        // ssize_t usr_inp_len=read(STDIN_FILENO, send_buff, sizeof(send_buff));
+        // if (usr_inp_len <= 0) {
+        // perror("Input read error");
+        // break; // Exit the loop if there's an error
+        // }
 
-    memset(recv_buff, 0, sizeof(recv_buff));
-    int valread=read(client_soc,recv_buff,sizeof(recv_buff));
-    if(valread!=-1)
-        printf("Server response : ",recv_buff);
+        // if (send_buff[usr_inp_len - 1] == '\n') {
+        //     send_buff[usr_inp_len - 1] = '\0';
+        //     usr_inp_len--; // Adjust the length to exclude the newline
+        // }
 
-    return 0;
+        int n=read_line(STDIN_FILENO, send_buff, sizeof(send_buff));
+        printf("read_line out",n);
+        write(client_soc, send_buff, strlen(send_buff));
+
+        //clear_buff(recv_buff);
+    } 
+
+    close(client_soc);
 }
