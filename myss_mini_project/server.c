@@ -6,9 +6,9 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include "constants.h"
-#include "menu.c"
-#include "admin.c"
-#include "utilities.c"
+#include "menu.h"
+#include "admin.h"
+#include "utilities.h"
 
 int init_server(){
     int server_soc;
@@ -70,13 +70,10 @@ void handle_client(int client_soc){
 
     
     char role=get_role(client_soc);
-    //printf("value of get role method : %c",role);
+ 
         
     switch(role){
         case '1': clear_buff(buffer);
-                //strcpy(buffer,"in admin menu");
-                //write(client_soc,buffer,sizeof(buffer));
-                //printf("In admin handling choice.");
                 handleAdmin(client_soc);
                 break;
         default:printf("\nEnter valid choice");
@@ -94,7 +91,6 @@ int main() {
 
 
     int client_addr_len;
-   // client_soc=accept(server_soc,(struct sockaddr*)&client_addr,&client_addr_len);
 for(;;){
         client_soc = accept(server_soc,(struct sockaddr*)&client_addr,&client_addr_len);
         if (client_soc < 0) {

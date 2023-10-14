@@ -2,8 +2,7 @@
 #include<stdio.h>
 #include "constants.h"
 #include "utilities.h"
-// #include "read_line.c"
-#include "student.c"
+#include "student.h"
 
 
 char send_buff[1024],recv_buff[1024];
@@ -27,19 +26,24 @@ void fill_admin(){
 int handleAdmin(int client_soc){
 	//authentication with username and pass
 	clear_buff(send_buff);
-	write(client_soc,ADMIN_UN,sizeof(ADMIN_UN));
+
+	write(client_soc,ADMIN_UN,strlen(ADMIN_UN));
 	char username[20];
 	clear_buff(recv_buff);
 	int n1=read_line(client_soc, recv_buff, sizeof(recv_buff));
 	str_cpy(username,recv_buff);
 
 	char pwd[20];
-	write(client_soc,ADMIN_PWD,sizeof(ADMIN_PWD));
+	clear_buff(send_buff);
+
+	write(client_soc,ADMIN_PWD,strlen(ADMIN_PWD));
 	clear_buff(recv_buff);
 	int n2=read_line(client_soc, recv_buff, sizeof(recv_buff));
 	str_cpy(pwd,recv_buff);
+	clear_buff(send_buff);
 
-	//printf("username and pwd is :  %s,%s",username,pwd);
+
+
 	fill_admin();
 	int status=1;
 
@@ -48,7 +52,7 @@ int handleAdmin(int client_soc){
 		while(status){
 			write(client_soc,ADMIN_MENU_MSG_CONST,sizeof(ADMIN_MENU_MSG_CONST));
 			clear_buff(recv_buff);
-			read_line(client_soc,recv_buff,strlen(send_buff));
+			read_line(client_soc,recv_buff,sizeof(recv_buff));
 
 			switch(atoi(recv_buff)){
 				case 1 :add_stud(client_soc); 
@@ -68,7 +72,7 @@ int handleAdmin(int client_soc){
 				// case 8 :mod_fac_details(client_soc);
 				// 		break;
 				case 9 :write(client_soc, CONN_CLOSE_MSG, strlen(CONN_CLOSE_MSG));
-                		status = 1;
+                		status = 0;
                 		break;
 			}
 		}

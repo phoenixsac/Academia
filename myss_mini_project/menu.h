@@ -1,5 +1,8 @@
 
 #include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include "constants.h"
 char* StudentMenu(){
 	char* student_menu_msg=(char*)malloc(256);
 	strcpy(student_menu_msg,STUDENT_MENU_MSG_CONST);
