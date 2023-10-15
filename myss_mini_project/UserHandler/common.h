@@ -11,11 +11,11 @@
 #include <stdlib.h>    // Import for `atoi`
 #include <errno.h>     // Import for `errno`
 
-#include "../Models/model.h"
-#include "../constants.h"
-#include "../DAL/student_repo.h"
-#include "../DAL/faculty_repo.h"
-#include "../DAL/course_repo.h"
+#include "../Model/model.h"
+#include "../config.h"
+#include "../DAL/studentRepo.h"
+#include "../DAL/facultyRepo.h"
+#include "../DAL/courseRepo.h"
 
 // Function Prototypes =================================
 

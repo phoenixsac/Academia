@@ -1,6 +1,6 @@
 #ifndef COURSES_H
 #define COURSES_H
-#include "../constants.h"
+#include "../config.h"
 typedef struct {
     int id;
     char name[20];

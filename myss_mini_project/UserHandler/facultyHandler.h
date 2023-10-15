@@ -1,7 +1,7 @@
 #ifndef FACULTY_FUNCTIONS
 #define FACULTY_FUNCTIONS
 
-#include "user_authentication.h"
+#include "common.h"
 
 //================================= Function Prototypes =================================
 
@@ -142,7 +142,7 @@ int add_course(int connFD, int facultyID)
 
 
     bzero(writeBuffer, sizeof(writeBuffer));
-    sprintf(writeBuffer, "%s", FACULTY_ADD_COURSE_SUCCESS);
+    sprintf(writeBuffer, "%s%d", FACULTY_ADD_COURSE_SUCCESS,newCourse.id);
     strcat(writeBuffer, "^");
     writeBytes = write(connFD, writeBuffer, strlen(writeBuffer));
     if (writeBytes == -1)

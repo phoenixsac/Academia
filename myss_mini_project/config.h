@@ -66,3 +66,76 @@
 
 #define ADMIN_MOD_SUCCESS "The required modification was successfully made!\nYou'll now be redirected to the main menu!^"
 #define ADMIN_LOGOUT "Logging you out now superman! Good bye!$"
+
+
+// ========== FACULTY SPECIFIC TEXT===================
+
+// LOGIN WELCOME
+#define FACULTY_LOGIN_WELCOME "Welcome dear faculty! Enter your credentials to gain access to your account!"
+#define FACULTY_LOGIN_SUCCESS "Welcome beloved faculty!"
+
+#define FACULTY_LOGOUT "Logging you out now dear faculty! Good bye!$"
+
+// FACULTY MENU
+#define FACULTY_MENU "1. Add Course\n2. Remove Offered Course\n3. View Enrollments in Course\n4. Change Password\n5. Change enrollment capacity\nPress any other key to logout"
+
+// ADD COURSE
+#define FACULTY_ADD_COURSE_NAME "What is the course's name?"
+#define FACULTY_REMOVE_COURSE "What is the course ID to be removed?"
+#define FACULTY_VIEW_COURSE_ENROLLENT "Enrollments in the course are"
+#define FACULTY_ADD_COURSE_SUCCESS "Course has been created successfully!\nCourse id of this course is : "
+#define FACULTY_ADD_COURSE_LIMIT "Enter the maximum no of students that can enroll?"
+#define FACULTY_ERROR_COURSE_LIMIT "Invalid Input: Given value is greater than maximum allowed"
+
+// UPDATE ENROLLMENT COURSE
+#define FACULTY_UPDATE_COURSE "What is the course ID?"
+#define FACULTY_UPDATE_COURSE_CAPACITY "What is the new capacity?"
+#define FACULTY_UPDATE_COURSE_INVALID "The entered capacity is not vaild.!^"
+#define FACULTY_UPDATE_COURSE_SUCCESS "Capacity has been updated successfully!"
+
+// REMOVE COURSE
+#define FACULTY_ERROR_COURSE_INVALID "The faculty is not teaching the course associated with the provided course ID.!^"
+#define FACULTY_REMOVE_COURSE_SUCCESS "Course has been removed successfully!"
+
+// ========== COURSE SPECIFIC TEXT===================
+
+#define COURSE_MAX_SEATS 10
+
+// ========== STUDENT SPECIFIC TEXT===================
+
+// LOGIN WELCOME
+#define STUDENT_LOGIN_WELCOME "Welcome dear student! Enter your credentials to gain access to your account!"
+#define STUDENT_LOGIN_SUCCESS "Welcome beloved student!"
+
+#define STUDENT_LOGOUT "Logging you out now dear student! Good bye!$"
+
+// STUDENT MENU
+#define STUDENT_MENU "1. Enroll Course\n2. Unenroll Course\n3. View Enrolled Courses\n4. Change Password\nPress any other key to logout"
+
+// ENROLL COURSE
+#define STUDENT_ENROLL_COURSE "What is the courseID?"
+#define STUDENT_UNENROLL_COURSE "What is the course ID to be removed?"
+#define STUDENT_VIEW_ENROLLENT "Enrollments in the course are"
+#define STUDENT_ENROLL_COURSE_SUCCESS "You have successfully enrolled in the course!"
+#define STUDENT_UNENROLL_COURSE_SUCCESS "You have been successfully removed from the course enrollment.!"
+#define STUDENT_ERROR_COURSE_INVALID "Please enter a valid course ID!^"
+#define STUDENT_ERROR_COURSE_FULL "Sorry, You cannot register because the course is already at maximum capacity.!^"
+#define STUDENT_VIEW_COURSES "Courses enrolled are: "
+#define STUDENT_ERROR_COURSE_TAKEN "You have already registered to the course.^"
+
+
+// ========== PASSWORD SPECIFIC TEXT===================
+
+#define PASSWORD_CHANGE_OLD_PASS "Enter your old password"
+#define PASSWORD_CHANGE_OLD_PASS_INVALID "The entered password doesn't seem to match with the old password"
+#define PASSWORD_CHANGE_NEW_PASS "Enter the new password"
+#define PASSWORD_CHANGE_SUCCESS "Password successfully changed!^"
+#define PASSWORD_CHANGE_FAIL "Failed to update Password. Please try again.^"
+
+// ============= DB ====================
+
+#define COURSE_FILE "DB/course.txt"
+#define STUDENT_FILE "DB/student.txt"
+#define FACULTY_FILE "DB/faculty.txt"
+
+#endif

@@ -40,7 +40,7 @@ void main()
         _exit(0);
     }
 
-    socketListenStatus = listen(socketFileDescriptor, 10);
+    socketListenStatus = listen(socketFileDescriptor, 1);
     if (socketListenStatus == -1)
     {
         perror("Error while listening for connections on the server socket!");

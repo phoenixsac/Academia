@@ -1,7 +1,7 @@
 #ifndef STUDENT_FUNCTIONS
 #define STUDENT_FUNCTIONS
 
-#include "user_authentication.h"
+#include "common.h"
 
 //================================= Function Prototypes =================================
 
