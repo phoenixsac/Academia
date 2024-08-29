@@ -7,6 +7,7 @@
 #include "../Model/model.h"
 #include "../config.h"
 
+// get next faculty id
 int getNextFacultyId()
 {
     ssize_t readBytes, writeBytes;
