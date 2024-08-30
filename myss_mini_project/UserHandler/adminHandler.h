@@ -4,7 +4,12 @@
 #include "common.h"
 
 //================================= Function Prototypes =================================
-
+// admin has the below functionalities - 
+// add student
+// add faculty
+// modify student info
+// modify facility info
+// admin runner or handler, where the admin functionality starts
 bool admin_operation_handler(int connFD);
 int add_student(int connFD);
 int add_faculty(int connFD);
@@ -18,8 +23,10 @@ bool admin_operation_handler(int connFD)
 
     if (login_handler(ADMIN, connFD))
     {
-        ssize_t writeBytes, readBytes;            // Number of bytes read from / written to the client
-        char readBuffer[1000], writeBuffer[1000]; // A buffer used for reading & writing to the client
+        // Number of bytes read from and written to the client
+        ssize_t writeBytes, readBytes;  
+        // A buffer used for reading & writing to the client
+        char readBuffer[1000], writeBuffer[1000]; 
         bzero(writeBuffer, sizeof(writeBuffer));
         strcpy(writeBuffer, ADMIN_LOGIN_SUCCESS);
         while (1)
